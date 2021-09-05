@@ -1,4 +1,7 @@
 <?php
+
+require_once 'core/class-create-taxonomies.php';
+
 add_action('init', function (){
 	$args = array('public'    => true,
 	              'supports'  => array('title', 'editor'),
@@ -109,3 +112,10 @@ function url_translit_iso($title){
 }
 
 add_action('sanitize_title', 'url_translit_iso', 0);
+
+function add_custom_tax() {
+	\WL_Test_Theme\Core\create_taxonomies::create_taxonomy( 'Brand', 'brand', 'car' );
+	\WL_Test_Theme\Core\create_taxonomies::create_taxonomy( 'Country manufacturer', 'country', 'car' );
+}
+
+add_action( 'init', 'add_custom_tax' );
