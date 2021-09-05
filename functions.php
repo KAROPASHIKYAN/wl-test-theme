@@ -3,6 +3,8 @@
 require_once 'core/class-create-taxonomies.php';
 require_once 'core/class-kama-post-meta-box.php';
 
+wp_enqueue_style('main', get_stylesheet_directory_uri() . '/style.css');
+
 add_action('after_setup_theme', function (){
 	add_theme_support('title-tag', );
 	add_theme_support( 'custom-logo', array(
@@ -185,4 +187,21 @@ function my_new_metabox() {
 		)
 	);
 
+}
+function phoneMask(string $number){
+	$number = substr_replace($number, " ", 2, 0);
+	$number = substr_replace($number, "(", 3, 0);
+	$number = substr_replace($number, ")", 7, 0);
+	$number = substr_replace($number, " ", 8, 0);
+	$number = substr_replace($number, "-", 11, 0);
+	$number = substr_replace($number, "-", 14, 0);
+
+	$result = '+'.$number;
+	return $result;
+}
+
+function get_clear_phone( string $phone, bool $plus = true ) {
+	$pattern = ( $plus ) ? '![^0-9]!' : '![^0-9+]!';
+
+	return preg_replace( $pattern, '', $phone );
 }

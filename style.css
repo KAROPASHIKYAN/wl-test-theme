@@ -1,3 +1,47 @@
 /*
 *  Theme Name:  WL Test Theme
 */
+.ic-color { -webkit-border-radius: 50%; border-radius: 50%; display: inline-block; height: 16px; width: 16px; margin: 0 10px 0 0; -webkit-flex-shrink: 0; -ms-flex-negative: 0; flex-shrink: 0; position: relative; top: 2px; z-index: 0; }
+.fields {
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 4em);
+    margin-bottom:3em;
+    margin-left:2em;
+    margin-right:1em;
+}
+h1 { text-align:center; }
+.content {
+    width: 800px;
+    margin: 2em;
+    text-align: justify;
+}
+
+header{
+    width: 100%;
+    background: #D8E3AB;
+    height: 70px;
+}
+
+
+header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+.tel {
+    font-size: 20px;
+    line-height: 24px;
+}
+.tel a {
+    color: #000;
+    text-decoration: none;
+}
+
+.head-text {
+    font-size: 20px;
+    line-height: 24px;
+    margin-left: 2em;
+    margin-right: 3em;
+}
