@@ -204,4 +204,22 @@ function get_clear_phone( string $phone, bool $plus = true ) {
 	$pattern = ( $plus ) ? '![^0-9]!' : '![^0-9+]!';
 
 	return preg_replace( $pattern, '', $phone );
+}function remove_tag($string){
+	$string = str_replace('<pre>', '', $string );
+	$string = str_replace('</pre>', '', $string );
+	$string = str_replace('<p>', '', $string );
+	$string = str_replace('</p>', '', $string );
+	$string = str_replace('<h1>', '', $string );
+	$string = str_replace('</h1>', '', $string );
+	$string = str_replace('<h2>', '', $string );
+	$string = str_replace('</h2>', '', $string );
+	$string = str_replace('<h3>', '', $string );
+	$string = str_replace('</h3>', '', $string );
+	$string = str_replace('<h4>', '', $string );
+	$string = str_replace('</h4>', '', $string );
+	$string = str_replace('<h5>', '', $string );
+	$string = str_replace('</h5>', '', $string );
+	$string = str_replace('<h6>', '', $string );
+	$string = str_replace('</h6>', '', $string );
+	return $string;
 }
