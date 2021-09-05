@@ -223,3 +223,48 @@ function get_clear_phone( string $phone, bool $plus = true ) {
 	$string = str_replace('</h6>', '', $string );
 	return $string;
 }
+function recent_posts(){
+	global $post;
+
+	$myposts = get_posts( [
+		'posts_per_page' => 10,
+		'post_type' => 'car',
+	] );
+
+	foreach( $myposts as $post ){
+		setup_postdata( $post );
+		?>
+		<div>
+			<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+		</div>
+		<?php
+	}
+	wp_reset_postdata();
+}
+add_shortcode( 'cars', 'recent_posts' );
+
+// Хуки
+function true_add_mce_button() {
+	// проверяем права пользователя - может ли он редактировать посты и страницы
+	if ( !current_user_can( 'edit_posts' ) && !current_user_can( 'edit_pages' ) ) {
+		return; // если не может, то и кнопка ему не понадобится, в этом случае выходим из функции
+	}
+	// проверяем, включен ли визуальный редактор у пользователя в настройках (если нет, то и кнопку подключать незачем)
+	if ( 'true' == get_user_option( 'rich_editing' ) ) {
+		add_filter( 'mce_external_plugins', 'true_add_tinymce_script' );
+		add_filter( 'mce_buttons', 'true_register_mce_button' );
+	}
+}
+add_action('admin_head', 'true_add_mce_button');
+
+// В этом функции указываем ссылку на JavaScript-файл кнопки
+function true_add_tinymce_script( $plugin_array ) {
+	$plugin_array['true_mce_button'] = get_stylesheet_directory_uri() .'/true_button.js'; // true_mce_button - идентификатор кнопки
+	return $plugin_array;
+}
+
+// Регистрируем кнопку в редакторе
+function true_register_mce_button( $buttons ) {
+	array_push( $buttons, 'true_mce_button' ); // true_mce_button - идентификатор кнопки
+	return $buttons;
+}
