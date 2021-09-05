@@ -1,6 +1,7 @@
 <?php
 
 require_once 'core/class-create-taxonomies.php';
+require_once 'core/class-kama-post-meta-box.php';
 
 add_action('init', function (){
 	$args = array('public'    => true,
@@ -119,3 +120,43 @@ function add_custom_tax() {
 }
 
 add_action( 'init', 'add_custom_tax' );
+
+add_action( 'init', 'my_new_metabox' );
+function my_new_metabox() {
+	class_exists( '\WL_Test_Theme\Core\Kama_Post_Meta_Box' ) && new \WL_Test_Theme\Core\Kama_Post_Meta_Box(
+		array(
+			'id'         => 'my',
+			'title'      => 'Мои произвольные поля',
+			'post_type' => 'car',
+
+			'theme' => array(
+				'css'        => '.kama_meta_box_my>.inside{ display:grid; grid-template-columns: repeat(2, 1fr);grid-template-rows: repeat(2, 4em);margin-bottom:3em; margin-left:1em; ,margin-right:1em; } .my_field_desc{ opacity:1; } .my_field_tit{ font-weight:bold; margin-bottom:.3em; }',
+				'fields_wrap' => '%s',
+				'field_wrap' => '<span class="my_field_wrap %1$s">%2$s</span>', // '%2$s' будет заменено на html поля
+				'title_patt' => '<span class="my_field_tit">%s</span>', // '%s' будет заменено на заголовок
+				'field_patt'  => '%s',
+				'desc_patt'  => '<span class="my_field_desc"> %s</span>', // '%s' будет заменено на текст описания
+			),
+
+			'fields'     => array(
+				'power_field'    => array(
+					'type'=>'number', 'title'=>'Мощность', 'desc'=>'Л.С.', 'attr'=>'min="0"'
+				),
+				'price_field'    => array(
+					'type'=>'number', 'title'=>'Цена', 'desc'=>'$', 'attr'=>'min="0"'
+				),
+				'fuel_field'    => array(
+					'type'=>'select', 'title'=>'Тип топлива', 'options'=>array(''=>'Ничего не выбрано', 'Бензин'=>'Бензин', 'Дизельное топливо'=>'Дизельное топливо')
+				),
+				'color_field'    => array(
+					'type'=>'color', 'title'=>'Цвет'
+				),
+				'image_field'    => array(
+					'type'=>'image', 'title'=>'Фото', 'options'=>'url'
+				),
+
+			),
+		)
+	);
+
+}
