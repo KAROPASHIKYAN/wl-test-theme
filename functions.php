@@ -3,6 +3,32 @@
 require_once 'core/class-create-taxonomies.php';
 require_once 'core/class-kama-post-meta-box.php';
 
+add_action('after_setup_theme', function (){
+	add_theme_support('title-tag', );
+	add_theme_support( 'custom-logo', array(
+		'width'         => 60,
+		'height'        => 60
+	) );
+});
+add_action( 'customize_register', 'true_customizer_init' );
+
+function true_customizer_init( $wp_customize ) {
+
+
+	$wp_customize->add_setting( 'phone_number', array(
+		'type' => 'theme_mod',
+		'default'=> '380999999999'
+
+	) );
+	$wp_customize->add_control( 'phone_number',
+		array(
+			'section'=> 'title_tagline',
+			'label'=>'Введите номер телефона',
+			'type'=> 'number'
+		) );
+
+}
+
 add_action('init', function (){
 	$args = array('public'    => true,
 	              'supports'  => array('title', 'editor'),
